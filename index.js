@@ -1,53 +1,30 @@
-// Code your solution in this file!
+const hq = 42;
+const feetPerBlock = 264;
 
-const scuberHquarter = 42;
-const manhattanBlockFeet = 264;
-
-// distanceFromHqInBlocks function
-function distanceFromHqInBlocks(sumTotal){
-     let blocks;
-     if(sumTotal > scuberHquarter){
-        blocks = sumTotal - scuberHquarter;
-     } else{
-        blocks = scuberHquarter - sumTotal;
-     }
-     
-     return blocks;
-
+function distanceFromHqInBlocks(street){
+    return Math.abs(street-hq);
 }
 
-// distance from hq in feet function
-function distanceFromHqInFeet(sumTotal) {
-  let blocks = distanceFromHqInBlocks(sumTotal);
-  return blocks * manhattanBlockFeet;
-
+function distanceFromHqInFeet(street){
+    return distanceFromHqInBlocks(street)*feetPerBlock; //we can call another function inside a function 
 }
 
-// distance travelled in feet function
-function distanceTravelledInFeet(start, destination) {
-    let travellDistance;
-      if (start > destination) {
-        travellDistance = (start - destination) * manhattanBlockFeet;
-      } else {
-        travellDistance = (destination - start) * manhattanBlockFeet;
-      }
-      return travellDistance;
-
+function distanceTravelledInFeet(start, destination){
+    return Math.abs(destination-start)*feetPerBlock;
 }
 
-// calculates fare price function
-function calculatesFarePrice(start, destination) {
-  let travellDistance = distanceTravelledInFeet(start, destination);
-  let fare;
-
-  if (travellDistance> 0 && travellDistance <= 400) {
-    return 0;
-  } else if (travellDistance > 400 && travellDistance <= 2000) {
-    fare = (travellDistance - 400) * 0.02;
-  } else if (travellDistance > 2000 && travellDistance <= 2500) {
-    fare = 25;
-  } else {
-    return "cannot travel that far"
-  }
-  return fare;
+function calculatesFarePrice(start, destination){
+    let dist=distanceTravelledInFeet(start, destination);
+    if (dist>=0 && dist<=400){
+        return 0;
+    }
+    else if (dist>=401 && dist<=2000){
+        return (dist-400)*0.02;
+    }
+    else if (dist>=2001 && dist<2500){
+        return 25;
+    }
+    else {
+        return "cannot travel that far";
+    }
 }
